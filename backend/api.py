@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, request
 from flask_cors import CORS, cross_origin
 from check_spf_dmarc import check_spf, check_dmarc
 import os   
@@ -49,15 +49,15 @@ def serve():
 def serve_static(path):
     return send_from_directory(app.static_folder, path)
 
-@app.route('/Check_spf_dmarc')
+@app.route('/Check_spf_dmarc', methods=['GET'])
 def check_spf_dmarc():
-    # Your logic here
-    pass
-
-@app.route('/Shufl_U_L')
-def shufl_u_l():
-    # Your logic here
-    pass
+    try:
+        # Your logic here, e.g., checking SPF/DKIM records
+        result = {"status": "success", "message": "SPF/DMARC check passed"}
+        return jsonify(result), 200
+    except Exception as e:
+        app.logger.error(f"Error in /Check_spf_dmarc: {e}")
+        return jsonify({"status": "error", "message": "Internal Server Error"}), 500
 
 
 
