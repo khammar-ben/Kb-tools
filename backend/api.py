@@ -49,6 +49,17 @@ def serve():
 def serve_static(path):
     return send_from_directory(app.static_folder, path)
 
+@app.route('/Check_spf_dmarc')
+def check_spf_dmarc():
+    # Your logic here
+    pass
+
+@app.route('/Shufl_U_L')
+def shufl_u_l():
+    # Your logic here
+    pass
+
+
 
 
 
