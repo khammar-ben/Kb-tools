@@ -4,7 +4,8 @@ from flask_cors import CORS, cross_origin
 from check_spf_dmarc import check_spf, check_dmarc
 import os   
 
-app = Flask(__name__)
+
+app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 CORS(app)
 
 @app.route('/api/check_records', methods=['POST'])
@@ -38,6 +39,15 @@ def index(filename):
     if not filename:
         filename = "index.html"
     return send_from_directory(build_folder,filename)
+
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory(app.static_folder, path)
 
 
 
